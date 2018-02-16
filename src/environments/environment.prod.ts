@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  aisUrl: 'https://e1.celin.io:9302/'
 };
