@@ -28,12 +28,6 @@ export class ItemSSRequest extends FormRequest {
         this.formServiceAction = 'R';
         this.maxPageSize = '1000';
         this.returnControlIDs = '1[56,50,28,30,23]';
-        this.formActions = [
-            {
-                controlID: '13',
-                command: 'DoAction'
-            }
-        ];
         if (text || item) {
             this.query = {
                 condition: [],
