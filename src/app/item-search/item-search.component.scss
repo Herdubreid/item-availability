@@ -11,7 +11,7 @@
     height: calc(100vh - 190px);
 }
 .mat-column-select {
-    flex: 0 0 5%;
+    max-width: 50px;
 }
 .mat-column-short {
     flex: 0 0 10%;
