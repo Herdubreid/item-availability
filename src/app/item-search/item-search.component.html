@@ -1,0 +1,42 @@
+<div class="mat-elevation-z8">
+  <button mat-icon-button default [disabled]="(status | async) === 'STATUS_BUSY'" (click)="search()">
+    <mat-icon color="primary">search</mat-icon>
+  </button>
+  <mat-form-field>
+    <input matInput placeholder="Text Search" [(ngModel)]="text">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Item Search" [(ngModel)]="item">
+  </mat-form-field>
+  <button mat-raised-button (click)="done()">Done</button>
+  <mat-table [dataSource]="itemList" matSort>
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>Select</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-slide-toggle (checked)="row.select"></mat-slide-toggle>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="text">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Search Text</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.text }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="item">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Item Number</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.item }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="desc">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.desc }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="desc2">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Description 2</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.desc2 }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="short">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Short Number</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.short }}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayColumns"></mat-row>
+  </mat-table>
+</div>

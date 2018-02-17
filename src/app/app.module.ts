@@ -16,11 +16,13 @@ import { E1EffectsService } from './e1/effects';
 import { E1HelperService } from './e1/helper';
 
 import { SignonPromptComponent } from './e1/signon-prompt.component';
+import { ItemSearchComponent } from './item-search/item-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignonPromptComponent
+    SignonPromptComponent,
+    ItemSearchComponent
   ],
   imports: [
     BrowserModule,

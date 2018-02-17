@@ -1,0 +1,27 @@
+.mat-form-field {
+    margin-top: 5px;
+    margin-left: 20px;
+    width: 300px;
+}
+.mat-icon-button, .mat-raised-button {
+    margin-left: 20px;
+}
+.mat-table {
+    overflow: auto;
+    height: calc(100vh - 190px);
+}
+.mat-column-select {
+    flex: 0 0 5%;
+}
+.mat-column-short {
+    flex: 0 0 10%;
+}
+.mat-header-row {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 5;
+}
+.mat-header-cell.mat-sort-header-sorted {
+    color: black;
+}

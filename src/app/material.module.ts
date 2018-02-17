@@ -8,7 +8,10 @@ import {
   MatInputModule,
   MatButtonModule,
   MatDialogModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatTableModule,
+  MatSortModule,
+  MatSlideToggleModule
 } from '@angular/material';
 /**
  * App's Material Modules
@@ -23,7 +26,10 @@ import {
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTableModule,
+    MatSortModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }

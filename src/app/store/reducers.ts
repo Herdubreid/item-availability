@@ -7,7 +7,10 @@ import { AppActions, ActionTypes } from './actions';
  */
 export function appReducer(state = initialAppState, action: AppActions.AllActions): IAppState {
   switch (action.type) {
-    /* TODO: Implement Actions */
+    case ActionTypes.ITEMS:
+      return Object.assign({}, state, {
+        items: [...action.items]
+      });
     case ActionTypes.RESET:
       return initialAppState;
     default:
