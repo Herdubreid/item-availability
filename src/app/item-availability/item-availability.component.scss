@@ -1,0 +1,35 @@
+.content {
+    overflow: auto;
+    height: calc(100vh - 90px);
+}
+
+.mat-card {
+    min-width: 280px;
+    max-width: 500px;
+    float: left;
+    margin: 5px;
+}
+
+.mat-fab {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+}
+
+.mat-card-subtitle {
+    font-size: 1.5em;
+}
+
+.mat-card-content {
+    font-size: 1em;
+}
+
+table {
+    width: 100%;
+    border-spacing: 4px;
+}
+
+.qt {
+    text-align: right;
+    padding-right: 15px;
+}

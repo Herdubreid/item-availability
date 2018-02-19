@@ -3,25 +3,38 @@
     margin-left: 20px;
     width: 300px;
 }
-.mat-icon-button, .mat-raised-button {
+
+.mat-icon-button,
+.mat-raised-button {
     margin-left: 20px;
 }
+
+.mat-fab {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+}
+
 .mat-table {
     overflow: auto;
-    height: calc(100vh - 190px);
+    height: calc(100vh - 160px);
 }
+
 .mat-column-select {
     max-width: 50px;
 }
+
 .mat-column-short {
     flex: 0 0 10%;
 }
+
 .mat-header-row {
     position: sticky;
     top: 0;
     background-color: white;
     z-index: 5;
 }
+
 .mat-header-cell.mat-sort-header-sorted {
     color: black;
 }

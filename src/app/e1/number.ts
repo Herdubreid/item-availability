@@ -3,6 +3,6 @@ export interface INumber {
     title: string;
     longName: string;
     assocDesc: string;
-    internalValue: number | string;
+    internalValue: number;
     value: string;
 }

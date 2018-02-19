@@ -11,7 +11,8 @@ import {
   MatProgressBarModule,
   MatTableModule,
   MatSortModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatCardModule
 } from '@angular/material';
 /**
  * App's Material Modules
@@ -29,7 +30,8 @@ import {
     MatProgressBarModule,
     MatTableModule,
     MatSortModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatCardModule
   ]
 })
 export class MaterialModule { }

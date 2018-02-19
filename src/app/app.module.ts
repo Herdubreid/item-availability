@@ -17,12 +17,16 @@ import { E1HelperService } from './e1/helper';
 
 import { SignonPromptComponent } from './e1/signon-prompt.component';
 import { ItemSearchComponent } from './item-search/item-search.component';
+import { ItemAvailabilityComponent } from './item-availability/item-availability.component';
+import { ItemFilterPipe } from './item-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignonPromptComponent,
-    ItemSearchComponent
+    ItemSearchComponent,
+    ItemAvailabilityComponent,
+    ItemFilterPipe
   ],
   imports: [
     BrowserModule,

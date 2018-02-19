@@ -1,0 +1,29 @@
+<button mat-fab (click)="add()">
+  <mat-icon aria-label="Add Items">add</mat-icon>
+</button>
+<div class="content">
+  <mat-card *ngFor="let each of available | async">
+    <mat-card-title>Item {{ each.item }}</mat-card-title>
+    <mat-card-subtitle>
+      <div>{{ each.desc }}</div>
+      <div>{{ each.desc2 }}</div>
+    </mat-card-subtitle>
+    <mat-card-content>
+      <table>
+        <tr>
+          <th>Branch</th>
+          <th>Available</th>
+          <th>Commited</th>
+          <th>On-Receipt</th>
+        </tr>
+        <tr *ngFor="let q of quantaties | async | itemFilter:each.item">
+          <td>{{ q.branch }}</td>
+          <td class="qt">{{ q.available }}</td>
+          <td class="qt">{{ q.commited }}</td>
+          <td class="qt">{{ q.onReceipt }}</td>
+          <td>{{ q.uom }}</td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

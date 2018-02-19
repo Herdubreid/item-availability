@@ -1,3 +1,4 @@
+<button mat-fab (click)="done()">Done</button>
 <div class="mat-elevation-z8">
   <button mat-icon-button default [disabled]="(status | async) === 'STATUS_BUSY'" (click)="search()">
     <mat-icon color="primary">search</mat-icon>
@@ -8,12 +9,11 @@
   <mat-form-field>
     <input matInput placeholder="Item Search" [(ngModel)]="item">
   </mat-form-field>
-  <button mat-raised-button (click)="done()">Done</button>
   <mat-table [dataSource]="itemList" matSort>
     <ng-container matColumnDef="select">
       <mat-header-cell *matHeaderCellDef>Select</mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <mat-slide-toggle (checked)="row.select"></mat-slide-toggle>
+        <mat-slide-toggle [disabled]="row.existing" [(ngModel)]="row.select"></mat-slide-toggle>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="text">
