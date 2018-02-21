@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 
 import { IState, IItem, IQuantity } from '../store/state';
+import { AppActions } from '../store/actions';
 
 @Component({
   selector: 'app-item-availability',
@@ -16,6 +17,12 @@ export class ItemAvailabilityComponent implements OnInit {
   quantaties: Observable<IQuantity[]>;
   add() {
     this.router.navigate(['item-search']);
+  }
+  refresh(item: string) {
+    this.store.dispatch(new AppActions.UpdateAvailableAction([item]));
+   }
+  remove(item: string) {
+    this.store.dispatch(new AppActions.RemoveAction(item))
   }
   ngOnInit() {
   }

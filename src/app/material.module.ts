@@ -12,7 +12,8 @@ import {
   MatTableModule,
   MatSortModule,
   MatSlideToggleModule,
-  MatCardModule
+  MatCardModule,
+  MatTabsModule
 } from '@angular/material';
 /**
  * App's Material Modules
@@ -31,7 +32,8 @@ import {
     MatTableModule,
     MatSortModule,
     MatSlideToggleModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule { }

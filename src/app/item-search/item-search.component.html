@@ -1,4 +1,6 @@
-<button mat-fab (click)="done()">Done</button>
+<button mat-fab (click)="done()">
+  <mat-icon aria-label="Done">check</mat-icon>
+</button>
 <div class="mat-elevation-z8">
   <button mat-icon-button default [disabled]="(status | async) === 'STATUS_BUSY'" (click)="search()">
     <mat-icon color="primary">search</mat-icon>

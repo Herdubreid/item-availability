@@ -7,6 +7,19 @@ import { AppActions, ActionTypes } from './actions';
  */
 export function appReducer(state = initialAppState, action: AppActions.AllActions): IAppState {
   switch (action.type) {
+    case ActionTypes.REMOVE:
+      return {
+        ...state, ...{
+          available: state.available.filter(r => r.item !== action.item),
+          quantities: state.quantities.filter(r => r.item !== action.item)
+        }
+      }
+    case ActionTypes.LEDGER:
+      return {
+        ...state, ...{
+          ledger: [...action.ledger]
+        }
+      };
     case ActionTypes.AVAILABLE:
       return {
         ...state, ...{

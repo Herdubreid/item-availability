@@ -19,6 +19,7 @@ import { SignonPromptComponent } from './e1/signon-prompt.component';
 import { ItemSearchComponent } from './item-search/item-search.component';
 import { ItemAvailabilityComponent } from './item-availability/item-availability.component';
 import { ItemFilterPipe } from './item-filter.pipe';
+import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ItemFilterPipe } from './item-filter.pipe';
     SignonPromptComponent,
     ItemSearchComponent,
     ItemAvailabilityComponent,
-    ItemFilterPipe
+    ItemFilterPipe,
+    ItemLedgerComponent
   ],
   imports: [
     BrowserModule,

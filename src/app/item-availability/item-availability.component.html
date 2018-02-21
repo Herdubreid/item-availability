@@ -9,21 +9,36 @@
       <div>{{ each.desc2 }}</div>
     </mat-card-subtitle>
     <mat-card-content>
-      <table>
-        <tr>
-          <th>Branch</th>
-          <th>Available</th>
-          <th>Committed</th>
-          <th>On-Receipt</th>
-        </tr>
-        <tr *ngFor="let q of quantaties | async | itemFilter:each.item">
-          <td>{{ q.branch }}</td>
-          <td class="qt">{{ q.available }}</td>
-          <td class="qt">{{ q.commited }}</td>
-          <td class="qt">{{ q.onReceipt }}</td>
-          <td>{{ q.uom }}</td>
-        </tr>
-      </table>
+      <mat-tab-group>
+        <mat-tab label="Summary">
+          <table>
+            <tr>
+              <th>Branch</th>
+              <th>Available</th>
+              <th>Committed</th>
+              <th>On-Receipt</th>
+            </tr>
+            <tr *ngFor="let q of quantaties | async | itemFilter:each.item">
+              <td>{{ q.branch }}</td>
+              <td class="qt">{{ q.available }}</td>
+              <td class="qt">{{ q.commited }}</td>
+              <td class="qt">{{ q.onReceipt }}</td>
+              <td>{{ q.uom }}</td>
+            </tr>
+          </table>
+        </mat-tab>
+        <mat-tab label="Ledger">
+          <app-item-ledger item="{{ each.item }}"></app-item-ledger>
+        </mat-tab>
+      </mat-tab-group>
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-icon-button (click)="refresh(each.item)">
+        <mat-icon color="primary">refresh</mat-icon>
+      </button>
+      <button mat-icon-button class="right" (click)="remove(each.item)">
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+    </mat-card-actions>
   </mat-card>
 </div>

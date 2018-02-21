@@ -7,10 +7,11 @@ import { empty as EmptyObservable } from 'rxjs/observable/empty';
 import { tap, map, filter, withLatestFrom, switchMap } from 'rxjs/operators';
 
 import { E1HelperService } from '../e1/helper';
-import { IState, IQuantity } from '../store/state';
+import { IState, IQuantity, ILedger } from '../store/state';
 import { AppActions, ActionTypes } from '../store/actions';
 import { IItemSSResponse, W40ITM1A } from '../e1/item-ss';
-import { WWItemAvailabilityRequest, W41202A, IWWItemAvailabilityForm } from '../e1/ww-item-availability';
+import { WWItemAvailabilityRequest, W41202A, IWWItemAvailabilityForm, IWWItemAvailabilityRow } from '../e1/ww-item-availability';
+import { WWItemLedgerRequest, W4111A, IWWItemLedgerForm } from '../e1/ww-item-ledger';
 
 /**
  * E1 Effects Service
@@ -51,7 +52,7 @@ export class E1EffectsService {
     addAvailable$ = this.actions$.ofType<AppActions.AddAvailableAction>(ActionTypes.ADD_AVAILABLE)
         .pipe(
             map(action => action.items),
-            switchMap(items => OfObservable(new AppActions.UpdateAvailableAction(items)))
+            switchMap(items => OfObservable(new AppActions.UpdateAvailableAction(items.map(r => r.item))))
         );
     @Effect({ dispatch: false })
     updateAvailable$ = this.actions$.ofType<AppActions.UpdateAvailableAction>(ActionTypes.UPDATE_AVAILABLE)
@@ -59,9 +60,9 @@ export class E1EffectsService {
             map(action => action.available),
             tap(available => {
                 if (available.length > 0) {
-                    const request = new BatchformRequest();
-                    request.formRequests = available.map(r => new WWItemAvailabilityRequest(r.item));
-                    this.batch.request = request;
+                    const availableRq = new BatchformRequest();
+                    availableRq.formRequests = available.map(r => new WWItemAvailabilityRequest(r));
+                    this.batch.request = availableRq;
                     this.e1.call(this.batch);
                 }
             })
@@ -70,12 +71,13 @@ export class E1EffectsService {
     itemAvailability$ = this.actions$.ofType<E1Actions.BatchformResponseAction>(E1ActionTypes.BATCHFORM_RESPONSE)
         .pipe(
             map(action => action.payload.batchformResponse),
+            filter(bf => bf[`fs_0_${W41202A}`]),
             withLatestFrom(this.store),
             switchMap(([bf, store]) => {
                 const qt: IQuantity[] = [];
                 for (let i = 0; bf[`fs_${i}_${W41202A}`]; i++) {
                     const form: IWWItemAvailabilityForm = bf[`fs_${i}_${W41202A}`];
-                    const total:IQuantity = {
+                    const total: IQuantity = {
                         item: form.data.txtItemNumber_17.value,
                         branch: 'TOTAL',
                         uom: form.data.txtUnitOfMeasure_19.value,
@@ -98,9 +100,46 @@ export class E1EffectsService {
                     }));
                     qt.push(total);
                 };
-                const existing = qt.map(ar => ar.item);
-                qt.push(...store.app.quantities.filter(sr => !existing.includes(sr.item)));
+                const existing = qt.map(r => r.item);
+                qt.push(...store.app.quantities.filter(r => !existing.includes(r.item)));
                 return qt.length > 0 ? OfObservable(new AppActions.AvailableAction(qt)) : EmptyObservable();
+            })
+        );
+    @Effect({ dispatch: false })
+    updateLedger$ = this.actions$.ofType<AppActions.AvailableAction>(ActionTypes.AVAILABLE)
+        .pipe(
+            map(action => action.quantities),
+            tap(qt => {
+                const ledgerRq = new BatchformRequest();
+                ledgerRq.formRequests = qt
+                    .filter(r => r.branch !== 'TOTAL')
+                    .map(r => new WWItemLedgerRequest(r.branch, r.item));
+                this.batch.request = ledgerRq;
+                this.e1.call(this.batch);
+            })
+        );
+    @Effect()
+    itemLedger$ = this.actions$.ofType<E1Actions.BatchformResponseAction>(E1ActionTypes.BATCHFORM_RESPONSE)
+        .pipe(
+            map(action => action.payload.batchformResponse),
+            filter(bf => bf[`fs_0_${W4111A}`]),
+            withLatestFrom(this.store),
+            switchMap(([bf, store]) => {
+                const ledger: ILedger[] = [];
+                for (let i = 0; bf[`fs_${i}_${W4111A}`]; i++) {
+                    const form: IWWItemLedgerForm = bf[`fs_${i}_${W4111A}`];
+                    ledger.push(...form.data.gridData.rowset.map<ILedger>(r => {
+                        return {
+                            item: form.data.txtItemNumber_17.value,
+                            branch: r.sBranchPlant_9.value,
+                            transaction: new Date(parseInt(r.dtTransactionDate_8.internalValue)),
+                            quantity: r.mnQuantity_10.internalValue
+                        }
+                    }));
+                }
+                const existing = ledger.map(r => r.item);
+                ledger.push(...store.app.ledger.filter(r => !existing.includes(r.item)));
+                return OfObservable(new AppActions.LedgerAction(ledger));
             })
         );
     constructor(

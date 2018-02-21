@@ -1,6 +1,4 @@
-import { FormRequest, IFormResponse, IForm, IFormData, IRow, IValue } from 'e1-service';
-
-import { INumber } from './number';
+import { FormRequest, IFormResponse, IForm, IFormData, IRow, IValue, INumber } from 'e1-service';
 
 export const W41202A = 'P41202_W41202A';
 

@@ -6,8 +6,19 @@
 .mat-card {
     min-width: 280px;
     max-width: 500px;
+    min-height: 400px;
     float: left;
     margin: 5px;
+}
+
+.mat-card-actions {
+    width: 90%;
+    position: absolute;
+    bottom: 20px;
+}
+
+.right {
+    float: right;
 }
 
 .mat-fab {
@@ -32,4 +43,13 @@ table {
 .qt {
     text-align: right;
     padding-right: 15px;
+}
+
+.chart div {
+    font: 10px sans-serif;
+    background-color: steelblue;
+    text-align: right;
+    padding: 3px;
+    margin: 1px;
+    color: white;
 }

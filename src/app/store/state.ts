@@ -20,10 +20,17 @@ export interface IQuantity {
   commited: number;
   onReceipt: number;
 }
+export interface ILedger {
+  item: string;
+  branch: string;
+  transaction: Date;
+  quantity: number;
+}
 export interface IAppState {
   items: IItem[];
   available: IItem[];
   quantities: IQuantity[];
+  ledger: ILedger[];
 }
 export interface IState {
   app: IAppState;
@@ -32,7 +39,8 @@ export interface IState {
 export const initialAppState: IAppState = {
   items: [],
   available: [],
-  quantities: []
+  quantities: [],
+  ledger: []
 };
 export const initialState: IState = {
   app: initialAppState,
