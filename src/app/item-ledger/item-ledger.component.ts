@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import * as d3 from 'd3';
-import * as moment from 'moment-mini-ts';
+import moment from 'moment-mini-ts';
 
 import { IState, ILedger } from '../store/state';
 
