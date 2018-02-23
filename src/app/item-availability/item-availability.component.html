@@ -10,6 +10,9 @@
     </mat-card-subtitle>
     <mat-card-content>
       <mat-tab-group>
+        <mat-tab label="Ledger">
+          <app-item-ledger item="{{ each.item }}"></app-item-ledger>
+        </mat-tab>
         <mat-tab label="Summary">
           <table>
             <tr>
@@ -26,9 +29,6 @@
               <td>{{ q.uom }}</td>
             </tr>
           </table>
-        </mat-tab>
-        <mat-tab label="Ledger">
-          <app-item-ledger item="{{ each.item }}"></app-item-ledger>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>

@@ -1,6 +1,1 @@
-<p>
-  Here we want {{ item }} ledger.
-</p>
-<p>
-  There are {{ (ledger | async | itemFilter:item)?.length }} transactions to chart.
-</p>
+<div class="chart-{{ item }}"></div>
