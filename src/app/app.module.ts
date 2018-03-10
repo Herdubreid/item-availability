@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -35,6 +36,7 @@ import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     MaterialModule,
     E1ServiceModule,
     StoreModule.forRoot(reducer),
