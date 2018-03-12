@@ -32,7 +32,7 @@ export class E1HelperService {
     call(service: IServiceCall, callback: IServiceCallback = {}, cancel = {}) {
         const cb = Object.assign({}, callback, {
             error: msg => {
-                console.log('Error:', msg);
+                console.log('Error:', msg.status);
                 if (msg.status === 444) {
                     this.autoSignon(service, callback);
                 } else {
