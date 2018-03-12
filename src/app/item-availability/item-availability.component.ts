@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Subscriber } from 'rxjs/Subscriber';
 
 import { IState, IItem, IQuantity } from '../store/state';
@@ -15,12 +16,16 @@ import { AppActions } from '../store/actions';
 export class ItemAvailabilityComponent implements OnInit {
   available: Observable<IItem[]>;
   quantaties: Observable<IQuantity[]>;
+  tab: Subject<any> = new Subject();
+  tabChange(item: string, e) {
+    this.tab.next({ item, page: e.index });
+  }
   add() {
     this.router.navigate(['item-search']);
   }
   refresh(item: string) {
     this.store.dispatch(new AppActions.UpdateAvailableAction([item]));
-   }
+  }
   remove(item: string) {
     this.store.dispatch(new AppActions.RemoveAction(item))
   }

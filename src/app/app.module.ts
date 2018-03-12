@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
-import { reducer } from './store/reducers';
+import { reducer, metaReducers } from './store/reducers';
 import { E1EffectsService } from './e1/effects';
 import { E1HelperService } from './e1/helper';
 
@@ -39,7 +39,7 @@ import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     MaterialModule,
     E1ServiceModule,
-    StoreModule.forRoot(reducer),
+    StoreModule.forRoot(reducer, { metaReducers }),
     EffectsModule.forRoot([E1EffectsService]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],

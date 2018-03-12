@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewEncapsulation, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { filter } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
+import { filter, combineLatest } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import * as d3 from 'd3';
 import * as moment from 'moment-mini-ts';
@@ -14,16 +15,23 @@ import { IState, ILedger } from '../store/state';
   styleUrls: ['./item-ledger.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ItemLedgerComponent implements OnInit, OnDestroy {
+export class ItemLedgerComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() item: string;
+  @Input() tab: Subject<any>;
   ledger: Observable<ILedger[]>;
-  subscr: Subscription;
+  subscr: Subscription[] = [];
   ngOnInit() {
+  }
+  ngAfterViewInit() {
     const margin = { top: 10, right: 0, bottom: 5, left: 50 };
     const width = 400 - margin.left - margin.right;
     const height = 300 - margin.top - margin.bottom;
-    this.subscr = this.ledger
-      .subscribe(l => {
+    this.subscr.push(this.ledger
+      .pipe(
+        combineLatest(this.tab),
+        filter(([l ,i]) => i.page === 1 && i.item === this.item)
+      )
+      .subscribe(([l, i]) => {
         const data = l
           .filter(r => r.item === this.item)
           .sort((a, b) => new Date(a.transaction).getTime() > new Date(b.transaction).getTime() ? -1 : 1)
@@ -74,10 +82,10 @@ export class ItemLedgerComponent implements OnInit, OnDestroy {
         svg.append('g')
           .attr('transform', `translate(${margin.left},0)`)
           .call(d3.axisLeft(y));
-      });
+      }));
   }
   ngOnDestroy() {
-    this.subscr.unsubscribe();
+    this.subscr.forEach(s => s.unsubscribe());
   }
   constructor(
     store: Store<IState>
