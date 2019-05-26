@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { BatchformService, E1Actions, E1ActionTypes, E1ServiceModule, BatchformRequest } from 'e1-service';
 import { of as OfObservable } from 'rxjs/observable/of';
 import { empty as EmptyObservable } from 'rxjs/observable/empty';
@@ -20,12 +20,12 @@ import { WWItemLedgerRequest, W4111A, IWWItemLedgerForm } from '../e1/ww-item-le
 @Injectable()
 export class E1EffectsService {
     @Effect()
-    reset$ = this.actions$.ofType<AppActions.ResetAction>(ActionTypes.RESET)
+    reset$ = this.actions$.pipe(ofType<AppActions.ResetAction>(ActionTypes.RESET))
         .pipe(
             switchMap(() => OfObservable(new E1Actions.ResetAction('sign-out')))
         );
     @Effect()
-    items$ = this.actions$.ofType<E1Actions.FormResponseAction>(E1ActionTypes.FORM_RESPONSE)
+    items$ = this.actions$.pipe(ofType<E1Actions.FormResponseAction>(E1ActionTypes.FORM_RESPONSE))
         .pipe(
             map(action => action.payload.formResponse),
             filter(formResponse => formResponse[W40ITM1A]),
@@ -49,13 +49,13 @@ export class E1EffectsService {
             })
         );
     @Effect()
-    addAvailable$ = this.actions$.ofType<AppActions.AddAvailableAction>(ActionTypes.ADD_AVAILABLE)
+    addAvailable$ = this.actions$.pipe(ofType<AppActions.AddAvailableAction>(ActionTypes.ADD_AVAILABLE))
         .pipe(
             map(action => action.items),
             switchMap(items => OfObservable(new AppActions.UpdateAvailableAction(items.map(r => r.item))))
         );
     @Effect({ dispatch: false })
-    updateAvailable$ = this.actions$.ofType<AppActions.UpdateAvailableAction>(ActionTypes.UPDATE_AVAILABLE)
+    updateAvailable$ = this.actions$.pipe(ofType<AppActions.UpdateAvailableAction>(ActionTypes.UPDATE_AVAILABLE))
         .pipe(
             map(action => action.available),
             tap(available => {
@@ -68,7 +68,7 @@ export class E1EffectsService {
             })
         );
     @Effect()
-    itemAvailability$ = this.actions$.ofType<E1Actions.BatchformResponseAction>(E1ActionTypes.BATCHFORM_RESPONSE)
+    itemAvailability$ = this.actions$.pipe(ofType<E1Actions.BatchformResponseAction>(E1ActionTypes.BATCHFORM_RESPONSE))
         .pipe(
             map(action => action.payload.batchformResponse),
             filter(bf => bf[`fs_0_${W41202A}`]),
@@ -106,7 +106,7 @@ export class E1EffectsService {
             })
         );
     @Effect({ dispatch: false })
-    updateLedger$ = this.actions$.ofType<AppActions.AvailableAction>(ActionTypes.AVAILABLE)
+    updateLedger$ = this.actions$.pipe(ofType<AppActions.AvailableAction>(ActionTypes.AVAILABLE))
         .pipe(
             map(action => action.quantities),
             tap(qt => {
@@ -119,7 +119,7 @@ export class E1EffectsService {
             })
         );
     @Effect()
-    itemLedger$ = this.actions$.ofType<E1Actions.BatchformResponseAction>(E1ActionTypes.BATCHFORM_RESPONSE)
+    itemLedger$ = this.actions$.pipe(ofType<E1Actions.BatchformResponseAction>(E1ActionTypes.BATCHFORM_RESPONSE))
         .pipe(
             map(action => action.payload.batchformResponse),
             filter(bf => bf[`fs_0_${W4111A}`]),

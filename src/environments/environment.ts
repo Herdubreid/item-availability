@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  aisUrl: 'https://jde02.uxcredrock.com/'
+  aisUrl: 'https://jde02.uxcredrock.com/jderest/'
 };

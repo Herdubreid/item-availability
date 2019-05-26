@@ -37,12 +37,12 @@ export class WWItemLedgerRequest extends FormRequest {
         this.formInputs = [
             {
                 id: '2',
-                value: branch
+                value: branch.padStart(12, ' ')
             },
             {
                 id: '5',
                 value: item
             }
-        ];
+        ]
     }
 }
